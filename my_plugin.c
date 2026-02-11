@@ -200,7 +200,7 @@ void arena_temp_end(Temp t)
 // Helpers for walking.
 #define EachIndex(it, count) (u64 it = 0; it < (count); it += 1)
 
-#define Max(A,B) (((A)>(B))?(A):(B)),
+#define Max(A,B) (((A)>(B))?(A):(B))
 #define AlignOf(T) __alignof(T)
 #define push_array_no_zero_aligned(a, T, c, align) (T *)arena_push((a), sizeof(T)*(c), (align), (0))
 #define push_array_aligned(a, T, c, align) (T *)arena_push((a), sizeof(T)*(c), (align), (1))
@@ -376,4 +376,5 @@ DEF_PLUGIN_EDITOR_HOOK("Change selection to snake case", "For each selection if 
 	scratch_end(scratch);
 }
 
-// #include "my_commands.c"
+#include "my_helpers.h"
+#include "my_commands.c"
