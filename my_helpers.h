@@ -7,6 +7,8 @@ typedef void* Arena;
 #define nullptr ((void*)0)
 #endif
 
+#define ZEROED {0}
+
 static EditorCtx* CtxGlobal = nullptr;
 
 #define Max(A,B) (((A)>(B))?(A):(B))
@@ -22,7 +24,7 @@ size_t strlen(const char* pntr)
 
 Str8 MakeStr8(u64 length, const void* pntr)
 {
-	Str8 result = {0};
+	Str8 result = ZEROED;
 	result.size = length;
 	result.str = (char*)pntr;
 	return result;
@@ -41,7 +43,7 @@ Str8 MakeStr8(u64 length, const void* pntr)
 
 Str8 AllocStr8(Arena arena, Str8 str)
 {
-	Str8 result = {0};
+	Str8 result = ZEROED;
 	result.size = str.size;
 	result.str = AllocArrayNoZero(char, arena, str.size);
 	memcpy(result.str, str.str, str.size);
@@ -50,7 +52,7 @@ Str8 AllocStr8(Arena arena, Str8 str)
 
 Str8 PrintInArena(Arena arena, const char* formatStr, ...)
 {
-	Str8 result = {0};
+	Str8 result = ZEROED;
 	va_list args;
 	va_start(args, formatStr);
 	str8_fmt_internal(arena, &result, formatStr, args);
