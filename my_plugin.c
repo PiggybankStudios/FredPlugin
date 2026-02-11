@@ -179,66 +179,6 @@ void str8_fmt_internal(void* a, String8* result, const char* fmt, va_list vlst);
 // The version of this fred API.  If there is a mismatch, you should regenerate the API.
 const u32 api_version = 0;
 
-// typedef struct Temp
-// {
-// 	void* arena;
-// 	u64 pos;
-// } Temp;
-
-// Temp arena_temp_begin(void* arena)
-// {
-// 	u64 pos =  arena_pos(arena);
-// 	Temp t = { .arena = arena, .pos = pos };
-// 	return t;
-// }
-
-// void arena_temp_end(Temp t)
-// {
-// 	arena_pop_to(t.arena, t.pos);
-// }
-
-// Helpers for walking.
-// #define EachIndex(it, count) (u64 it = 0; it < (count); it += 1)
-
-// #define Max(A,B) (((A)>(B))?(A):(B))
-// #define AlignOf(T) __alignof(T)
-// #define push_array_no_zero_aligned(a, T, c, align) (T *)arena_push((a), sizeof(T)*(c), (align), (0))
-// #define push_array_aligned(a, T, c, align) (T *)arena_push((a), sizeof(T)*(c), (align), (1))
-// #define push_array_no_zero(a, T, c) push_array_no_zero_aligned(a, T, c, Max(8, AlignOf(T)))
-// #define push_array(a, T, c) push_array_aligned(a, T, c, Max(8, AlignOf(T)))
-
-// Scratch arena creation.  You pass in a 'conflict' arena when you don't want one scratch arena to overwrite another when nested functions are involved.
-// #define scratch_begin(conflict) arena_temp_begin(arena_pull_scratch(ctx->mgr, (conflict)))
-// #define scratch_end(scratch) arena_temp_end(scratch)
-
-// Strings.
-// String8 str8(char* s, u64 size)
-// {
-// 	String8 r = { .str = s, .size = size };
-// 	return r;
-// }
-
-// #define str8_lit(S) str8((char*)(S), sizeof(S) - 1)
-
-// String8 str8_fmt(void* a, const char* fmt, ...)
-// {
-// 	String8 result = {0};
-// 	va_list va;
-// 	va_start(va, fmt);
-// 	str8_fmt_internal(a, &result, fmt, va);
-// 	va_end(va);
-// 	return result;
-// }
-
-// String8 str8_copy(void* a, String8 str)
-// {
-// 	String8 cpy = {0};
-// 	cpy.size = str.size;
-// 	cpy.str = push_array_no_zero(a, char, str.size);
-// 	memcpy(cpy.str, str.str, str.size);
-// 	return cpy;
-// }
-
 // API definition hook.
 typedef void(*HotkeyPluginEditorFn)(EditorCtx*);
 
