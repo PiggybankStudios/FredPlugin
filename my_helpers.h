@@ -2,8 +2,17 @@
 typedef String8 Str8;
 typedef void* Arena;
 
-static EditorCtx* CtxGlobal = NULL;
+//TODO: Should we be careful about whether we are compiling in C++ mode?
+#ifndef nullptr
+#define nullptr ((void*)0)
+#endif
 
+static EditorCtx* CtxGlobal = nullptr;
+
+#define Max(A,B) (((A)>(B))?(A):(B))
+#define AlignOf(T) __alignof(T)
+
+//TODO: Can we get this from the c standard library?
 size_t strlen(const char* pntr)
 {
 	size_t result = 0;
@@ -11,12 +20,43 @@ size_t strlen(const char* pntr)
 	return result;
 }
 
-#define MakeStr8(length, pntr)                  str8((pntr), (length))
-#define MakeStr8Nt(nullTermStr)                 str8((char*)(nullTermStr), strlen(nullTermStr))
-#define StrLit(lit)                             str8((char*)(lit), sizeof(lit) - 1)
-#define ScratchBegin(name)                      Temp name_##Temp = arena_temp_begin(arena_pull_scratch(CtxGlobal->mgr, NULL)); Arena name = name_##Temp.arena
-#define ScratchEnd(name)                        arena_temp_end(name_##Temp)
-#define PrintInArena(arenaPntr, formatStr, ...) str8_fmt((arenaPntr), formatStr, ##__VA_ARGS__)
+Str8 MakeStr8(u64 length, const void* pntr)
+{
+	Str8 result = {0};
+	result.size = length;
+	result.str = (char*)pntr;
+	return result;
+}
+#define MakeStr8Nt(nullTermStr)                 MakeStr8(strlen(nullTermStr), (char*)(nullTermStr))
+#define StrLit(lit)                             MakeStr8(sizeof(lit) - 1, (char*)(lit))
+
+#define AllocArrayNoZero(type, arenaPntr, numElements) (type*)arena_push((arenaPntr), sizeof(type)*(numElements), Max(8, AlignOf(type)), 0)
+#define AllocArray(type, arenaPntr, numElements) (type*)arena_push((arenaPntr), sizeof(type)*(numElements), Max(8, AlignOf(type)), 1)
+#define AllocTypeNoZero(type, arenaPntr) (type*)arena_push((arenaPntr), sizeof(type), AlignOf(type), 0)
+#define AllocType(type, arenaPntr) (type*)arena_push((arenaPntr), sizeof(type), AlignOf(type), 1)
+
+#define ScratchBegin(name)                      Arena name = arena_pull_scratch(CtxGlobal->mgr, nullptr); u64 name_##Mark = arena_pos(name)
+#define ScratchBegin1(name, conflict)           Arena name = arena_pull_scratch(CtxGlobal->mgr, (conflict)); u64 name_##Mark = arena_pos(name)
+#define ScratchEnd(name)                        arena_pop_to(name, name_##Mark)
+
+Str8 AllocStr8(Arena arena, Str8 str)
+{
+	Str8 result = {0};
+	result.size = str.size;
+	result.str = AllocArrayNoZero(char, arena, str.size);
+	memcpy(result.str, str.str, str.size);
+	return result;
+}
+
+Str8 PrintInArena(Arena arena, const char* formatStr, ...)
+{
+	Str8 result = {0};
+	va_list args;
+	va_start(args, formatStr);
+	str8_fmt_internal(arena, &result, formatStr, args);
+	va_end(args);
+	return result;
+}
 
 void Notify_I(const char* message)
 {

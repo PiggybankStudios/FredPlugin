@@ -4,4 +4,5 @@ DEF_PLUGIN_EDITOR_HOOK("Run 'Taylor' Command", "A test command for experimenting
 {
 	CtxGlobal = ctx;
 	NotifyPrint_W("Context pntr: %p", ctx);
+	CtxGlobal = nullptr;
 }
