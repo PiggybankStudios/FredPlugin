@@ -11,6 +11,17 @@ Date:   02\21\2026
 void* memcpy(void* _Dst, const void* _Src, size_t _Size);
 
 //TODO: Can we get this from the c standard library?
+int memcmp(const void * ptr1, const void * ptr2, size_t num)
+{
+	for (size_t bIndex = 0; bIndex < num; bIndex++)
+	{
+		if (((unsigned char*)ptr1)[bIndex] > ((unsigned char*)ptr2)[bIndex]) { return 1; }
+		if (((unsigned char*)ptr1)[bIndex] < ((unsigned char*)ptr2)[bIndex]) { return -1; }
+	}
+	return 0;
+}
+
+//TODO: Can we get this from the c standard library?
 size_t strlen(const char* pntr)
 {
 	size_t result = 0;

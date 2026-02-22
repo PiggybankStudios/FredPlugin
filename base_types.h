@@ -78,9 +78,9 @@ typedef struct Str8Array
 	u64 size; // Size of array.
 } Str8Array;
 
-// +==============================+
-// |   Helper Functions/Macros    |
-// +==============================+
+// +--------------------------------------------------------------+
+// |                   Helper Functions/Macros                    |
+// +--------------------------------------------------------------+
 Str8 MakeStr8(u64 length, void* pntr)
 {
 	Str8 r = { .str = pntr, .size = length };
@@ -88,6 +88,7 @@ Str8 MakeStr8(u64 length, void* pntr)
 }
 #define StrLit(stringLiteral) MakeStr8(sizeof(stringLiteral)-1, (char*)(stringLiteral))
 #define MakeStr8Nt(nullTermStr)  MakeStr8(strlen(nullTermStr), (char*)(nullTermStr))
+#define Str8_Empty MakeStr8(0, nullptr)
 
 typedef struct Str8SliceParams
 {

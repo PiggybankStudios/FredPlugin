@@ -38,4 +38,6 @@ Date:   02\21\2026
 #define DeferIfBlockCondEndEx(uniqueName, startCodeAndCondition, endCode) for (int uniqueName = 1 * !(startCodeAndCondition); uniqueName == 0; (uniqueName = 1, (endCode)))
 #define DeferIfBlockCondEnd(startCodeAndCondition, endCode)               DeferIfBlockCondEndEx(DeferBlockIter, (startCodeAndCondition), (endCode))
 
+#define SetOptionalOutPntr(outputPntr, value) if ((outputPntr) != nullptr) { *(outputPntr) = (value); }
+
 #endif //  _STD_MACROS_H
