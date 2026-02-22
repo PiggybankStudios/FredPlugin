@@ -170,7 +170,7 @@
 		],
 		"custom_globals":
 		[
-			"CtxGlobal",
+			"Ctx",
 		],
 		"custom_types":
 		[

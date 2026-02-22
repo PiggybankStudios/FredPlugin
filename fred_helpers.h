@@ -11,16 +11,16 @@ Description:
 #define _FRED_HELPERS_H
 
 //This variable should get filled out at the beginning (and cleared at the end) of each plugin hook function so that macros like ScratchBegin don't need the context as a parameter
-EditorCtx* CtxGlobal = nullptr;
-#define WithContext(context) DeferBlockWithStart(CtxGlobal = (context), CtxGlobal = nullptr)
+EditorCtx* Ctx = nullptr;
+#define WithContext(context) DeferBlockWithStart(Ctx = (context), Ctx = nullptr)
 
 #define AllocArrayNoZero(type, arenaPntr, numElements) (type*)arena_push((arenaPntr), sizeof(type)*(numElements), Max2(8, ALIGNMENT_OF(type)), 0)
 #define AllocArray(type, arenaPntr, numElements)       (type*)arena_push((arenaPntr), sizeof(type)*(numElements), Max2(8, ALIGNMENT_OF(type)), 1)
 #define AllocTypeNoZero(type, arenaPntr)               (type*)arena_push((arenaPntr), sizeof(type),                       ALIGNMENT_OF(type),  0)
 #define AllocType(type, arenaPntr)                     (type*)arena_push((arenaPntr), sizeof(type),                       ALIGNMENT_OF(type),  1)
 
-#define ScratchBegin(name)             Arena* name = arena_pull_scratch(CtxGlobal->mgr, nullptr); u64 name_##Mark = arena_pos(name)
-#define ScratchBegin1(name, conflict)  Arena* name = arena_pull_scratch(CtxGlobal->mgr, (conflict)); u64 name_##Mark = arena_pos(name)
+#define ScratchBegin(name)             Arena* name = arena_pull_scratch(Ctx->mgr, nullptr); u64 name_##Mark = arena_pos(name)
+#define ScratchBegin1(name, conflict)  Arena* name = arena_pull_scratch(Ctx->mgr, (conflict)); u64 name_##Mark = arena_pos(name)
 #define ScratchEnd(name)               arena_pop_to(name, name_##Mark)
 
 Str8 PrintInArena(Arena* arena, const char* formatStr, ...)

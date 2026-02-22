@@ -1,19 +1,21 @@
 # Shortcuts we need
+	[ ] Ctrl+(Shift+)T - Toggle (large) header comment
 	[ ] Ctrl+/ - Toggle line comment
 	[ ] Ctrl+D - Multi-cursor select next match (without wrapping)
 	[ ] Alt+S - Jump to next match
 	[ ] Alt+(Shift+)Left/Right - Move by subword
-	[X] Ctrl+R - Kill line(s)
 	[ ] Ctrl+Shift+C - Duplicate selection/line
-	[ ] Ctrl+(Shift+)T - Toggle (large) header comment
 	[ ] Ctrl+Alt+Up/Down - Jump to Next/Previous Function or Header
-	[ ] Ctrl+Shift+S - Save As (but start at folder of current or most recent file TODO: Maybe only needed when making a new tab and saving?)
-	[ ] Ctrl+Alt+R - Rename file
 	[ ] Shift+( - Add open paren but support wrapping parenthesis if selection is not empty
-	[ ] F12 - Goto definition
 	[ ] Alt+X - Check off TODO list item
-	[ ] Alt+A - Align multi-cursors by inserting spaces
-	[ ] 
+	@Not Possible Right Now?
+	[ ] Ctrl+Alt+R - Rename file
+	[ ] Ctrl+Shift+S - Save As (but start at folder of current or most recent file TODO: Maybe only needed when making a new tab and saving?)
+	[ ] F12 - Goto definition
+	@Completed
+	[X] `align_cursors` - Alt+A - Align multi-cursors by inserting spaces
+	[X] `kill_line` - Ctrl+R - Kill line(s)
+	[X] `insert_nums_0/1` - Ctrl+Alt+N - Insert Nums (starting at 0)
 
 # Bugs
 	[ ] Keypad Enter shows as "Null" in bindings
