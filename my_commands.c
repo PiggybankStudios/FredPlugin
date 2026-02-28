@@ -210,7 +210,7 @@ bool IsValidTitleChar(char c)
 	if (c >= 'a' && c <= 'z') { return true; }
 	if (c >= '0' && c <= '9') { return true; }
 	if (c == ' ') { return true; }
-	if (c == ',' || c == '\'' || c == '/' || c == '\\' ||
+	if (c == ',' || c == '\'' || c == '/' || c == '\\' || c == '+' ||
 	    c == '(' || c == ')' || c == '-' || c == '_' || c == '|')
 	{
 		return true;
@@ -340,37 +340,9 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 			};
 			
 			NotifyPrint_I("Collapsing header on lines %llu-%llu to \"%S\"", headerTopLine, headerTopLine+2, headerText);
-			Str8 headerTextWithIndentation = Str8_Empty;
-			headerTextWithIndentation.size = indentationStr.size + headerText.size;
-			headerTextWithIndentation.str = AllocArray(char, scratch, headerTextWithIndentation.size);
-			if (indentationStr.size > 0) { memcpy(&headerTextWithIndentation.str[0], indentationStr.str, indentationStr.size); }
-			memcpy(&headerTextWithIndentation.str[indentationStr.size], headerText.str, headerText.size);
-			#if 1
 			batchReplace.array[replaceIndex].range = headerRange;
-			batchReplace.array[replaceIndex].buf = headerTextWithIndentation;
+			batchReplace.array[replaceIndex].buf = JoinStringsInArena(scratch, indentationStr, headerText);
 			replaceIndex++;
-			#else
-			EditorCmd cmd = ZEROED;
-			//Select all 3 lines
-			cmd = (EditorCmd)ZEROED;
-			cmd.cmd = ED_NavMoveCursorTo;
-			cmd.flags = 0;
-			cmd.byte_offsets.size = 1;
-			cmd.byte_offsets.array = &headerRange.last_off;
-			ed_push_command(Ctx, &cmd);
-			cmd = (EditorCmd)ZEROED;
-			cmd.cmd = ED_NavMoveCursorTo;
-			cmd.flags = ED_FLG_UpdateSelection;
-			cmd.byte_offsets.size = 1;
-			cmd.byte_offsets.array = &headerRange.last_off;
-			ed_push_command(Ctx, &cmd);
-			
-			cmd = (EditorCmd)ZEROED;
-			cmd.cmd = ED_InsInsert;
-			cmd.flags = 0;
-			cmd.buf = headerText;
-			ed_push_command(Ctx, &cmd);
-			#endif
 		}
 		else if (cursorContents.size > 0)
 		{
@@ -380,25 +352,12 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 			ed_string_at_range(scratch, Ctx, &cursorLineRange, &cursorLineStr);
 			indentationStr = StrSlice(cursorLineStr, 0, 0);
 			while (indentationStr.size < cursorLineStr.size && (cursorLineStr.str[indentationStr.size] == ' ' || cursorLineStr.str[indentationStr.size] == '\t')) { indentationStr.size++; }
+			
 			// Create the header
 			Str8 headerLines = ConvertTitleToHeader(scratch, cursorContents, indentationStr, lineCommentSyntax, width, cornerChar, topChar, bottomChar, leftChar, rightChar);
-			
-			#if 1
 			batchReplace.array[replaceIndex].range = cursor.sel;
 			batchReplace.array[replaceIndex].buf = headerLines;
 			replaceIndex++;
-			#else
-			EditorCmd cmd = ZEROED;
-			cmd.cmd = ED_InsInsert;
-			cmd.flags = 0;
-			cmd.buf = headerLines;
-			ed_push_command(Ctx, &cmd);
-			#endif
-		}
-		else
-		{
-			// Strip the header
-			//TODO: Implement me!
 		}
 	}
 	

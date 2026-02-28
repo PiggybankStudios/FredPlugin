@@ -7,4 +7,6 @@
 #include "fred_helpers.h"
 
 #include "example_commands.c"
+
+#include "my_helpers.c"
 #include "my_commands.c"
