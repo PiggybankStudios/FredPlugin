@@ -38,4 +38,9 @@ typedef __builtin_va_list va_list;
 typedef va_list __gnuc_va_list;
 #define _VA_LIST_DEFINED
 
+//TODO: This could probably be a little closer to bool.h. For example comparing (something == true) is not the same as checking the truthiness of (something)
+typedef int bool;
+#define true 1
+#define false 0
+
 #endif //  _STD_TYPES_H
