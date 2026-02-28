@@ -42,6 +42,7 @@
 			"ED_InsReplace",
 			"ED_InsTab",
 			"ED_Ins_END",
+			"ED_MCCreateCursors",
 			"ED_MCDropCursors",
 			"ED_MCDupCursorDown",
 			"ED_MCDupCursorUp",

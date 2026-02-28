@@ -20,75 +20,76 @@ const u32 api_version = 1;
 // +==============================+
 typedef enum EditorCommands
 {
-	ED_SaveRequestSave, // Saves the current buffer if there are changes.
+	ED_SaveRequestSave, // (.cmd) Saves the current buffer if there are changes.
 	ED_SaveRequest_END = 0xF,
-	ED_CloseRequestClose, // Closes the current editor.
+	ED_CloseRequestClose, // (.cmd) Closes the current editor.
 	ED_CloseRequest_END = 0x1F,
-	ED_RequestClipboardCopy, // Copies selection to clipboard.  If no selection it will copy the content line.
-	ED_RequestClipboardCut, // Copies with the same semantics as copy to clipboard, but also removes the content.
-	ED_RequestClipboardPaste, // Inserts the content of the system clipboard into the current buffer.
-	ED_RequestClipboardPasteBeforeCursor, // Inserts the content of the system clipboard into the buffer.  If it is a line copy, the line is pasted before the cursor line.
+	ED_RequestClipboardCopy, // (.cmd) Copies selection to clipboard.  If no selection it will copy the content line.
+	ED_RequestClipboardCut, // (.cmd) Copies with the same semantics as copy to clipboard, but also removes the content.
+	ED_RequestClipboardPaste, // (.cmd) Inserts the content of the system clipboard into the current buffer.
+	ED_RequestClipboardPasteBeforeCursor, // (.cmd) Inserts the content of the system clipboard into the buffer.  If it is a line copy, the line is pasted before the cursor line.
 	ED_RequestClipboard_END = 0x2F,
-	ED_FindRequestFind, // Opens the 'Find' widget.
-	ED_FindRequestFindWithSeed, // Opens the 'Find' widget but seeds the search with the current selection or word under cursor.
+	ED_FindRequestFind, // (.cmd) Opens the 'Find' widget.
+	ED_FindRequestFindWithSeed, // (.cmd) Opens the 'Find' widget but seeds the search with the current selection or word under cursor.
 	ED_FindRequest_END = 0x3F,
-	ED_SelectionClearSelections, // Clears all selections.
+	ED_SelectionClearSelections, // (.cmd) Clears all selections.
 	ED_Selection_END = 0x4F,
-	ED_NavPageUp, // Moves cursor up by one page.
-	ED_NavPageDown, // Moves cursor down by one page.
-	ED_NavLeft, // Moves cursor to the left.  If at the beginning of the line, cursor will advance to end of line above.
-	ED_NavRight, // Moves cursor to the right.  If at the end of the line, cursor will advance to the beginning of the line below.
-	ED_NavRightNoNLAdvance, // Moves cursor to the right.
-	ED_NavLineDown, // Moves cursor down a line maintaining column.
-	ED_NavLineUp, // Moves cursor up a line maintaining column.
-	ED_NavCursorTopScreen, // Moves cursor to top of viewport.
-	ED_NavCursorBottomScreen, // Moves cursor to bottom of viewport.
-	ED_NavCursorCenterScreen, // Moves cursor to middle of viewport.
-	ED_NavBeginningOfLine, // Moves cursor to beginning of the line.
-	ED_NavFirstNonemptyOfLine, // Moves cursor to first non-whitespace character of line.
-	ED_NavEndOfLine, // Moves cursor to end of the line.
-	ED_NavContentEnd, // Moves cursor to the end of the content.
-	ED_NavContentBeginning, // Moves cursor to beginning of content.
-	ED_NavMatchingEncloser, // Snaps cursor to nearest enclosing symbol.  If at an enclosing symbol, cursor will move to opposing enclosing symbol.
-	ED_NavWordRight, // Moves cursor one word to the right.
-	ED_NavChunkRight, // Moves cursor one word chunk to the right.
-	ED_NavWordLeft, // Moves cursor one word to the left.
-	ED_NavChunkLeft, // Moves cursor one word chunk to the left.
-	ED_NavRequestGotoLine, // Opens go to line widget.
-	ED_NavCenterCameraCursor, // Moves the camera view such that the primary cursor is in mid screen.
-	ED_NavEmptyBlockUp, // Moves cursor to nearest empty line above.
-	ED_NavEmptyBlockDown, // Moves cursor to nearest empty line below.
-	ED_NavCursorHistoryBack, // Moves cursor to its previous position.
-	ED_NavCursorHistoryForward, // Moves cursor to its next future position.
-	ED_NavMoveCursorTo, // Moves cursor to a specific byte position in the buffer.
+	ED_NavPageUp, // (.cmd,.flags) Moves cursor up by one page.
+	ED_NavPageDown, // (.cmd,.flags) Moves cursor down by one page.
+	ED_NavLeft, // (.cmd,.flags) Moves cursor to the left.  If at the beginning of the line, cursor will advance to end of line above.
+	ED_NavRight, // (.cmd,.flags) Moves cursor to the right.  If at the end of the line, cursor will advance to the beginning of the line below.
+	ED_NavRightNoNLAdvance, // (.cmd,.flags) Moves cursor to the right.
+	ED_NavLineDown, // (.cmd,.flags) Moves cursor down a line maintaining column.
+	ED_NavLineUp, // (.cmd,.flags) Moves cursor up a line maintaining column.
+	ED_NavCursorTopScreen, // (.cmd,.flags) Moves cursor to top of viewport.
+	ED_NavCursorBottomScreen, // (.cmd,.flags) Moves cursor to bottom of viewport.
+	ED_NavCursorCenterScreen, // (.cmd,.flags) Moves cursor to middle of viewport.
+	ED_NavBeginningOfLine, // (.cmd,.flags) Moves cursor to beginning of the line.
+	ED_NavFirstNonemptyOfLine, // (.cmd,.flags) Moves cursor to first non-whitespace character of line.
+	ED_NavEndOfLine, // (.cmd,.flags) Moves cursor to end of the line.
+	ED_NavContentEnd, // (.cmd,.flags) Moves cursor to the end of the content.
+	ED_NavContentBeginning, // (.cmd,.flags) Moves cursor to beginning of content.
+	ED_NavMatchingEncloser, // (.cmd,.flags) Snaps cursor to nearest enclosing symbol.  If at an enclosing symbol, cursor will move to opposing enclosing symbol.
+	ED_NavWordRight, // (.cmd,.flags) Moves cursor one word to the right.
+	ED_NavChunkRight, // (.cmd,.flags) Moves cursor one word chunk to the right.
+	ED_NavWordLeft, // (.cmd,.flags) Moves cursor one word to the left.
+	ED_NavChunkLeft, // (.cmd,.flags) Moves cursor one word chunk to the left.
+	ED_NavRequestGotoLine, // (.cmd,.flags) Opens go to line widget.
+	ED_NavCenterCameraCursor, // (.cmd,.flags) Moves the camera view such that the primary cursor is in mid screen.
+	ED_NavEmptyBlockUp, // (.cmd,.flags) Moves cursor to nearest empty line above.
+	ED_NavEmptyBlockDown, // (.cmd,.flags) Moves cursor to nearest empty line below.
+	ED_NavCursorHistoryBack, // (.cmd,.flags) Moves cursor to its previous position.
+	ED_NavCursorHistoryForward, // (.cmd,.flags) Moves cursor to its next future position.
+	ED_NavMoveCursorTo, // (.cmd,.flags,.byte_offsets) Moves cursor to a specific byte position in the buffer.
 	ED_Nav_END = 0x4FF,
-	ED_MCDupCursorDown, // Creates a new multi-cursor one line below.
-	ED_MCDupCursorUp, // Creates a new multi-cursor one line above.
-	ED_MCInsertGroup, // Performs a unique insert per-cursor.
-	ED_MCDropCursors, // Deletes all multi-cursors.
-	ED_MCSelectionToCursor, // Creates a selection at the current word.  If selection exists, creates a new multi-cursor at the next identical selection.
+	ED_MCDupCursorDown, // (.cmd) Creates a new multi-cursor one line below.
+	ED_MCDupCursorUp, // (.cmd) Creates a new multi-cursor one line above.
+	ED_MCInsertGroup, // (.cmd,.buffers) Performs a unique insert per-cursor.
+	ED_MCDropCursors, // (.cmd) Deletes all multi-cursors.
+	ED_MCSelectionToCursor, // (.cmd) Creates a selection at the current word.  If selection exists, creates a new multi-cursor at the next identical selection.
+	ED_MCCreateCursors, // (.cmd,.byte_offsets) Creates multi-cursors at the specified byte positions.
 	ED_MC_END = 0x50F,
-	ED_InsInsert, // Inserts a buffer at the cursor.
-	ED_InsReplace, // Inserts a buffer at cursor, overwriting characters overlapping the buffer.  Does not advance cursor.
-	ED_InsOverwriteInsertBuf, // Inserts a buffer at cursor, overwriting characters overlapping the buffer.
-	ED_InsOpenLineBelow, // Opens a new content line below cursor.
-	ED_InsOpenLineAbove, // Opens a new content line above cursor.
-	ED_InsTab, // Inserts a tap (may be expanded to spaces).
+	ED_InsInsert, // (.cmd,.buf) Inserts a buffer at the cursor.
+	ED_InsReplace, // (.cmd,.buf) Inserts a buffer at cursor, overwriting characters overlapping the buffer.  Does not advance cursor.
+	ED_InsOverwriteInsertBuf, // (.cmd,.buf) Inserts a buffer at cursor, overwriting characters overlapping the buffer.
+	ED_InsOpenLineBelow, // (.cmd) Opens a new content line below cursor.
+	ED_InsOpenLineAbove, // (.cmd) Opens a new content line above cursor.
+	ED_InsTab, // (.cmd) Inserts a tap (may be expanded to spaces).
 	ED_Ins_END = 0x90F,
-	ED_SpecJoinLineBelow, // Joins the content line below with the current line at cursor.
-	ED_SpecTrimLineEndings, // Trims trailing spaces at all lines.
-	ED_SpecTab, // Tabs a line.
-	ED_SpecUntab, // Untabs a line.
+	ED_SpecJoinLineBelow, // (.cmd) Joins the content line below with the current line at cursor.
+	ED_SpecTrimLineEndings, // (.cmd) Trims trailing spaces at all lines.
+	ED_SpecTab, // (.cmd) Tabs a line.
+	ED_SpecUntab, // (.cmd) Untabs a line.
 	ED_Spec_END = 0xA0F,
-	ED_DelDeleteLine, // Deletes the line of content at cursor.
-	ED_DelDeleteChar, // Deletes a single character at the cursor.  If a selection is active, the selection is deleted.
-	ED_DelDeleteWord, // Deletes a word at the cursor.  If a selection is active, the selection is deleted.
-	ED_DelDeleteChunk, // Deletes a word chunk at cursor.  If a selection is active, the selection is deleted.
-	ED_DelBackspaceWord, // Deletes a word before the cursor.  If a selection is active, the selection is deleted.
-	ED_DelBackspaceChunk, // Deletes a word chunk before the cursor.  If a selection is active, the selection is deleted.
+	ED_DelDeleteLine, // (.cmd) Deletes the line of content at cursor.
+	ED_DelDeleteChar, // (.cmd) Deletes a single character at the cursor.  If a selection is active, the selection is deleted.
+	ED_DelDeleteWord, // (.cmd) Deletes a word at the cursor.  If a selection is active, the selection is deleted.
+	ED_DelDeleteChunk, // (.cmd) Deletes a word chunk at cursor.  If a selection is active, the selection is deleted.
+	ED_DelBackspaceWord, // (.cmd) Deletes a word before the cursor.  If a selection is active, the selection is deleted.
+	ED_DelBackspaceChunk, // (.cmd) Deletes a word chunk before the cursor.  If a selection is active, the selection is deleted.
 	ED_Del_END = 0xF0F,
-	ED_URTryUndo, // Attemps an undo operation.
-	ED_URTryRedo, // Attemps a redo operation.
+	ED_URTryUndo, // (.cmd) Attemps an undo operation.
+	ED_URTryRedo, // (.cmd) Attemps a redo operation.
 	ED_UR_END = 0xF1F,
 } EditorCommands;
 
@@ -251,7 +252,7 @@ void ed_edit_batch_remove(EditorBatchEdit* batch, EditorBatchRemove* ops);
 void ed_edit_batch_replace(EditorBatchEdit* batch, EditorBatchReplace* ops);
 // Commands.
 // Pushes a new editor command.
-void ed_push_command(EditorCtx*, EditorCmd*);
+void ed_push_command(EditorCtx* ctx, EditorCmd* cmd);
 
 // +==============================+
 // |           Utility            |

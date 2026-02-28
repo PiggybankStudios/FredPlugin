@@ -1,3 +1,7 @@
+# TODO List
+	[ ] Create a string manipulation header-only library for Fred plugins
+	[ ] 
+
 # Shortcuts we need
 	[ ] Ctrl+(Shift+)T - Toggle (large) header comment
 	[ ] Ctrl+/ - Toggle line comment

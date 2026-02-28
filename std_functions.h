@@ -8,7 +8,9 @@ Date:   02\21\2026
 #define _STD_FUNCTIONS_H
 
 // Basic CRT protos.
+int memcmp(const void* _Buf1, const void* _Buf2, size_t _Size);
 void* memcpy(void* _Dst, const void* _Src, size_t _Size);
+void* memset(void* _Dst, int _Val, size_t _Size);
 
 //TODO: Can we get this from the c standard library?
 size_t strlen(const char* pntr)
