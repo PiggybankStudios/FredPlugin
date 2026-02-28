@@ -1,5 +1,6 @@
 # TODO List
 	[ ] Create a string manipulation header-only library for Fred plugins
+	[ ] We might need to handle multiple cursors being next to the same header that's getting collapsed in toggle_header
 	[ ] 
 
 # Shortcuts we need

@@ -316,6 +316,9 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 	batchReplace.size = cursors.size;
 	batchReplace.array = AllocArray(EditorReplaceData, scratch, batchReplace.size);
 	u64 replaceIndex = 0;
+	EditorOffsetArray newCursors = ZEROED;
+	newCursors.size = 0;
+	newCursors.array = AllocArray(u64, scratch, cursors.size);
 	
 	for (u64 cIndex = 0; cIndex < cursors.size; cIndex++)
 	{
@@ -340,8 +343,14 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 			};
 			
 			NotifyPrint_I("Collapsing header on lines %llu-%llu to \"%S\"", headerTopLine, headerTopLine+2, headerText);
-			batchReplace.array[replaceIndex].range = headerRange;
-			batchReplace.array[replaceIndex].buf = JoinStringsInArena(scratch, indentationStr, headerText);
+			
+			newCursors.array[newCursors.size] = headerRange.last_off;
+			newCursors.size++;
+			
+			EditorReplaceData* replacePntr = &batchReplace.array[replaceIndex];
+			replacePntr->range = headerRange;
+			replacePntr->buf = JoinStringsInArena(scratch, indentationStr, headerText);
+			
 			replaceIndex++;
 		}
 		else if (cursorContents.size > 0)
@@ -355,6 +364,10 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 			
 			// Create the header
 			Str8 headerLines = ConvertTitleToHeader(scratch, cursorContents, indentationStr, lineCommentSyntax, width, cornerChar, topChar, bottomChar, leftChar, rightChar);
+			
+			newCursors.array[newCursors.size] = Max2(cursor.sel.first_off, cursor.sel.last_off);
+			newCursors.size++;
+			
 			batchReplace.array[replaceIndex].range = cursor.sel;
 			batchReplace.array[replaceIndex].buf = headerLines;
 			replaceIndex++;
@@ -368,6 +381,61 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 		ed_edit_batch_begin(Ctx, &batchEdit);
 		ed_edit_batch_replace(&batchEdit, &batchReplace);
 		ed_edit_batch_end(Ctx, &batchEdit);
+		
+		//Fixup the cursor locations based on replacements
+		for (u64 cIndex = 0; cIndex < newCursors.size; cIndex++)
+		{
+			u64* cursorPntr = &newCursors.array[cIndex];
+			u64 cursorOriginalOffset = *cursorPntr;
+			for (u64 rIndex = 0; rIndex < batchReplace.size; rIndex++)
+			{
+				EditorReplaceData* replacePntr = &batchReplace.array[rIndex];
+				u64 replaceMin = Min2(replacePntr->range.first_off, replacePntr->range.last_off);
+				u64 replaceMax = Max2(replacePntr->range.first_off, replacePntr->range.last_off);
+				u64 replaceLength = replaceMax - replaceMin;
+				if (cursorOriginalOffset >= replaceMin)
+				{
+					i64 bufferLengthDiff = (i64)replacePntr->buf.size - (i64)(replaceMax - replaceMin);
+					if (bufferLengthDiff != 0)
+					{
+						NotifyPrint_I("Replacement[%llu] changes buffer by %s%lld", rIndex, bufferLengthDiff >= 0 ? "+" : "", bufferLengthDiff);
+						bool cursorIsInside = (cursorOriginalOffset > replaceMin && cursorOriginalOffset < replaceMax);
+						if (cursorIsInside)
+						{
+							u64 cursorInReplaceOffset = (cursorOriginalOffset - replaceMin);
+							bool isCursorOnRight = (cursorInReplaceOffset >= replaceLength/2);
+							if (isCursorOnRight) { *cursorPntr += replaceLength - cursorInReplaceOffset; }
+							else { *cursorPntr -= cursorInReplaceOffset; }
+						}
+						else
+						{
+							*cursorPntr += bufferLengthDiff;
+						}
+					}
+				}
+			}
+			NotifyPrint_I("Cursor[%llu] went from %llu->%llu after %llu replacement%s",
+				cIndex,
+				cursorOriginalOffset, *cursorPntr,
+				batchReplace.size, (batchReplace.size == 1) ? "" : "s"
+			);
+		}
+		
+		EditorCmd command = ZEROED;
+		command.cmd = ED_MCDropCursors;
+		ed_push_command(Ctx, &command);
+		command.cmd = ED_NavMoveCursorTo;
+		command.byte_offsets.size = 1;
+		command.byte_offsets.array = &newCursors.array[0];
+		ed_push_command(Ctx, &command);
+		if (newCursors.size > 1)
+		{
+			command.cmd = ED_MCCreateCursors;
+			command.byte_offsets.size = newCursors.size-1;
+			command.byte_offsets.array = &newCursors.array[1];
+			ed_push_command(Ctx, &command);
+		}
+		
 	}
 	else { Notify_W("No selections are on a header line or selecting text to convert to header"); }
 	
