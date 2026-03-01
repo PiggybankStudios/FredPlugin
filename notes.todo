@@ -7,7 +7,8 @@
 # Shortcuts we need
 	[ ] Alt+S - Jump to next match
 	[ ] Ctrl+Up/Down - Jump to empty line **and** place the cursor to the right of indentation
-	[ ] Ctrl+/ - Toggle line comment
+	[ ] Ctrl+/ - Toggle line comment TODO: Modify "toggle_comment" to place comment syntax after indentation on line
+	[ ] Ctrl+Shift+/ - Toggle comment with /* */ syntax
 	[ ] Ctrl+D - Multi-cursor select next match (without wrapping)
 	[ ] Alt+(Shift+)Left/Right - Move by subword
 	[ ] Ctrl+Shift+C - Duplicate selection/line

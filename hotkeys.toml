@@ -365,3 +365,9 @@ group = 'ED'
 fn = 'toggle_header_large'
 key = 'T'
 mods = ['Ctrl','Shift']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'toggle_comment'
+key = '/'
+mods = ['Ctrl']
