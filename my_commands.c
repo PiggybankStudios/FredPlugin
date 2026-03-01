@@ -342,8 +342,7 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 				.last_off=Max2(bottomLineRange.first_off, bottomLineRange.last_off),
 			};
 			
-			NotifyPrint_I("Collapsing header on lines %llu-%llu to \"%S\"", headerTopLine, headerTopLine+2, headerText);
-			
+			// NotifyPrint_I("Collapsing header on lines %llu-%llu to \"%S\"", headerTopLine, headerTopLine+2, headerText);
 			newCursors.array[newCursors.size] = headerRange.last_off;
 			newCursors.size++;
 			
@@ -398,7 +397,7 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 					i64 bufferLengthDiff = (i64)replacePntr->buf.size - (i64)(replaceMax - replaceMin);
 					if (bufferLengthDiff != 0)
 					{
-						NotifyPrint_I("Replacement[%llu] changes buffer by %s%lld", rIndex, bufferLengthDiff >= 0 ? "+" : "", bufferLengthDiff);
+						// NotifyPrint_I("Replacement[%llu] changes buffer by %s%lld", rIndex, bufferLengthDiff >= 0 ? "+" : "", bufferLengthDiff);
 						bool cursorIsInside = (cursorOriginalOffset > replaceMin && cursorOriginalOffset < replaceMax);
 						if (cursorIsInside)
 						{
@@ -414,28 +413,17 @@ void ToggleHeader(Str8 lineCommentSyntax, u64 width, char cornerChar, char topCh
 					}
 				}
 			}
-			NotifyPrint_I("Cursor[%llu] went from %llu->%llu after %llu replacement%s",
-				cIndex,
-				cursorOriginalOffset, *cursorPntr,
-				batchReplace.size, (batchReplace.size == 1) ? "" : "s"
-			);
+			// NotifyPrint_I("Cursor[%llu] went from %llu->%llu after %llu replacement%s",
+			// 	cIndex,
+			// 	cursorOriginalOffset, *cursorPntr,
+			// 	batchReplace.size, (batchReplace.size == 1) ? "" : "s"
+			// );
 		}
 		
 		EditorCmd command = ZEROED;
-		command.cmd = ED_MCDropCursors;
-		ed_push_command(Ctx, &command);
 		command.cmd = ED_NavMoveCursorTo;
-		command.byte_offsets.size = 1;
-		command.byte_offsets.array = &newCursors.array[0];
+		command.byte_offsets = newCursors;
 		ed_push_command(Ctx, &command);
-		if (newCursors.size > 1)
-		{
-			command.cmd = ED_MCCreateCursors;
-			command.byte_offsets.size = newCursors.size-1;
-			command.byte_offsets.array = &newCursors.array[1];
-			ed_push_command(Ctx, &command);
-		}
-		
 	}
 	else { Notify_W("No selections are on a header line or selecting text to convert to header"); }
 	
