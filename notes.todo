@@ -1,13 +1,14 @@
 # TODO List
+	[ ] "toggle_header" should select the title text after stripping it
 	[ ] Create a string manipulation header-only library for Fred plugins
-	[ ] We might need to handle multiple cursors being next to the same header that's getting collapsed in toggle_header
+	[X] We might need to handle multiple cursors being next to the same header that's getting collapsed in toggle_header (it's not perfect but it's fine)
 	[ ] 
 
 # Shortcuts we need
-	[ ] Ctrl+(Shift+)T - Toggle (large) header comment
+	[ ] Alt+S - Jump to next match
+	[ ] Ctrl+Up/Down - Jump to empty line **and** place the cursor to the right of indentation
 	[ ] Ctrl+/ - Toggle line comment
 	[ ] Ctrl+D - Multi-cursor select next match (without wrapping)
-	[ ] Alt+S - Jump to next match
 	[ ] Alt+(Shift+)Left/Right - Move by subword
 	[ ] Ctrl+Shift+C - Duplicate selection/line
 	[ ] Ctrl+Alt+Up/Down - Jump to Next/Previous Function or Header
@@ -18,6 +19,7 @@
 	[ ] Ctrl+Shift+S - Save As (but start at folder of current or most recent file TODO: Maybe only needed when making a new tab and saving?)
 	[ ] F12 - Goto definition
 	@Completed
+	[X] Ctrl+(Shift+)T - Toggle (large) header comment
 	[X] `align_cursors` - Alt+A - Align multi-cursors by inserting spaces
 	[X] `kill_line` - Ctrl+R - Kill line(s)
 	[X] `insert_nums_0/1` - Ctrl+Alt+N - Insert Nums (starting at 0)
@@ -39,4 +41,5 @@
 	[ ] Allow for unbinding a command that has a binding by default
 	[ ] Ability to ask Fred for the line ending style of the current file
 	[ ] Add "strlen" and "memcmp" to provided plugin functions
+	[ ] Alt+LeftDoubleClick should select word with multi-cursor support
 	[ ] 
