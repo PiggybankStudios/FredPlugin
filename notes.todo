@@ -28,6 +28,7 @@
 # Bugs
 	[ ] Keypad Enter shows as "Null" in bindings
 	[ ] Ctrl+; and Ctrl+Shift+; do not work as bindings for some reason?
+	[ ] If I fill out the "Function" field before choosing a binding in the "Custom Hotkey Builder" then I run into weird bugs. (also pasting from clipboard for function even after setting the binding)
 	[ ] 
 
 # Tweak Requests
@@ -43,4 +44,5 @@
 	[ ] Ability to ask Fred for the line ending style of the current file
 	[ ] Add "strlen" and "memcmp" to provided plugin functions
 	[ ] Alt+LeftDoubleClick should select word with multi-cursor support
-	[ ] 
+	[ ] Support for tab indentation in a file
+	[ ] Auto detect indentation style for the file when opened (tab vs spaces, indentation width)

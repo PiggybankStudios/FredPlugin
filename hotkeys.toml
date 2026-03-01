@@ -124,6 +124,11 @@ key = 'W'
 mods = ['Ctrl','Alt','Shift']
 
 [[binding]]
+name = 'ED_GotoLine'
+key = 'G'
+mods = ['Ctrl']
+
+[[binding]]
 name = 'ED_Find'
 key = 'F'
 mods = ['Ctrl']
@@ -135,7 +140,7 @@ mods = ['Ctrl','Alt']
 
 [[binding]]
 name = 'ED_JumpMatching'
-key = '\'
+key = '['
 mods = ['Ctrl','Shift']
 
 [[binding]]
@@ -371,3 +376,51 @@ group = 'ED'
 fn = 'toggle_comment'
 key = '/'
 mods = ['Ctrl']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'jump_to_next'
+key = 'S'
+mods = ['Alt']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'taylor'
+key = 'TODO: Tick'
+mods = ['Ctrl']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'align_cursors'
+key = 'A'
+mods = ['Alt']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'insert_nums_0'
+key = 'N'
+mods = ['Ctrl','Alt']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'insert_nums_1'
+key = 'N'
+mods = ['Ctrl','Alt','Shift']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'replace_word_fred'
+key = 'F'
+mods = ['Ctrl','Alt','Shift']
+
+[[binding.custom]]
+group = 'ED'
+fn = 'line_info'
+key = '\'
+mods = ['Ctrl','Shift']
+
+[[binding.custom]]
+group = 'ED'
+fn = ''
+key = 'Null'
+mods = []

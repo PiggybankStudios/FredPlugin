@@ -476,7 +476,7 @@ DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance o
 					if (contentsAtOffset.size == cursorContents.size &&
 						memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
 					{
-						NotifyPrint_I("Found match at %llu", newCursor.cursor_off);
+						// NotifyPrint_I("Found match at %llu", newCursor.cursor_off);
 						newCursor.sel.first_off = newCursor.cursor_off;
 						newCursor.sel.last_off = newCursor.cursor_off + cursorContents.size;
 						foundMatch = true;
@@ -488,24 +488,23 @@ DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance o
 			}
 			if (!foundMatch) { Notify_W("No matches"); break; }
 			
-			NotifyPrint_I("Selecting [%llu,%llu]", newCursor.sel.first_off, newCursor.sel.last_off);
+			// NotifyPrint_I("Selecting [%llu,%llu]", newCursor.sel.first_off, newCursor.sel.last_off);
 			EditorCmd command = ZEROED;
 			command.cmd = ED_NavMoveCursorTo;
 			command.byte_offsets.size = 1;
-			command.byte_offsets.array = &newCursor.sel.last_off;
+			command.byte_offsets.array = &newCursor.sel.first_off;
 			ed_push_command(Ctx, &command);
 			command.cmd = ED_NavMoveCursorTo;
 			command.flags = ED_FLG_UpdateSelection|ED_FLG_ResetCamera;
 			command.byte_offsets.size = 1;
-			command.byte_offsets.array = &newCursor.sel.first_off;
+			command.byte_offsets.array = &newCursor.sel.last_off;
 			ed_push_command(Ctx, &command);
 		} while(false);
 		ScratchEnd(scratch);
 	}
 }
 
-//TODO: toggle_header/toggle_header_large
-//TODO: toggle_comment
+//TODO: Fixup toggle_comment from example_commands.c
 //TODO: add_next_no_wrapping
 //TODO: move_left_subword/move_left_subword
 //TODO: duplicate_selection

@@ -42,8 +42,8 @@ noisy_flattened_events = false
 embold_vim_cursor = true
 embold_cursor = false
 line_guides = true
-font_size_px = 30
-tray_font_size = 30
+font_size_px = 20
+tray_font_size = 20
 tabstop = 4
 
 [[editor.highlights]]
@@ -142,7 +142,7 @@ last_save_node_color = 0xff00ff
 external_change_node_color = 0xb11be3ff
 
 [diff.state]
-diff_font_size = 30
+diff_font_size = 20
 
 [file_explorer.colors]
 default_font_color = 0xffffffff
@@ -162,7 +162,7 @@ PB_color = 0xff0a00ff
 EB_color = 0xffffffff
 
 [file_explorer.state]
-font_size = 30
+font_size = 20
 noisy_dir_root = false
 rooted_filters = ""
 
@@ -172,7 +172,7 @@ warning = 0xe3811cff
 error = 0xff0000ff
 
 [feed.state]
-feed_font_size = 30
+feed_font_size = 20
 
 [widget.colors]
 window_border = 0xadd6ff26
@@ -190,7 +190,7 @@ warning = 0xe3811cff
 error = 0xff0000ff
 
 [widget.state]
-window_title_font_size = 30
+window_title_font_size = 20
 scrollbar_width = 10
 scrollbar_min_size = 20
 
@@ -222,4 +222,5 @@ highlight_line_edit = true
 hotkeys = '/home/robbitay/.cadacama/fred/hotkeys.toml'
 
 [plugins.core]
-plugins_source_file = '/home/robbitay/my/dev/fred_plugin/my_plugin.c'
+plugins_source_file = '/home/robbitay/MyStuff/projects/fred_plugin/my_plugin.c'
+gen_base_template_only = false
