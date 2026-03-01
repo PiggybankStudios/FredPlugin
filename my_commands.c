@@ -446,52 +446,60 @@ DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance o
 	WithContext(ctx)
 	{
 		ScratchBegin(scratch);
-		EditorCursorArray cursors = ZEROED;
-		ed_cursor_ranges(scratch, Ctx, &cursors);
-		EditorCursorArray newCursors = ZEROED;
-		newCursors.size = cursors.size;
-		newCursors.array = AllocArray(EditorCursorRange, scratch, newCursors.size);
-		for (u64 cIndex = 0; cIndex < cursors.size; cIndex++)
+		do //Breakable block
 		{
-			EditorCursorRange* cursor = &cursors.array[cIndex];
-			EditorCursorRange* newCursor = &newCursors.array[cIndex];
-			newCursor->cursor_off = Max2(cursor->sel.first_off, cursor->sel.last_off);
+			Notify_I("test");
+			u64 fileSize = ed_content_byte_count(Ctx);
+			
+			EditorCursorArray cursors = ZEROED;
+			ed_cursor_ranges(scratch, Ctx, &cursors);
+			if (cursors.size == 0) { Notify_W("No cursors"); break; }
+			if (cursors.size > 1) { Notify_W("More than one cursor"); break; }
+			if (cursors.array[0].sel.first_off == cursors.array[0].sel.last_off) { Notify_W("No selection"); break; }
+			
+			EditorCursorRange cursor = cursors.array[0];
 			Str8 cursorContents = ZEROED;
-			ed_string_at_range(scratch, Ctx, &cursor->sel, &cursorContents);
+			ed_string_at_range(scratch, Ctx, &cursor.sel, &cursorContents);
+			
+			EditorCursorRange newCursor = ZEROED;
+			newCursor.cursor_off = Max2(cursor.sel.first_off, cursor.sel.last_off);
+			
 			bool foundMatch = false;
 			if (cursorContents.size > 0)
 			{
 				u64 scratchMark = arena_pos(scratch);
-				while (newCursor->cursor_off + cursorContents.size <= ed_content_byte_count(Ctx))
+				while (newCursor.cursor_off + cursorContents.size <= fileSize)
 				{
 					Str8 contentsAtOffset = ZEROED;
-					EditorOffsetRange range = { .first_off = newCursor->cursor_off, .last_off = newCursor->cursor_off + cursorContents.size };
-					ed_string_at_range(scratch, Ctx, &cursor->sel, &contentsAtOffset);
-					if (contentsAtOffset.size == cursorContents.size && memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
+					EditorOffsetRange range = { .first_off = newCursor.cursor_off, .last_off = newCursor.cursor_off + cursorContents.size };
+					ed_string_at_range(scratch, Ctx, &range, &contentsAtOffset);
+					if (contentsAtOffset.size == cursorContents.size &&
+						memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
 					{
-						newCursor->sel.first_off = newCursor->cursor_off;
-						newCursor->sel.last_off = newCursor->cursor_off + cursorContents.size;
+						NotifyPrint_I("Found match at %llu", newCursor.cursor_off);
+						newCursor.sel.first_off = newCursor.cursor_off;
+						newCursor.sel.last_off = newCursor.cursor_off + cursorContents.size;
 						foundMatch = true;
 						break;
 					}
 					arena_pop_to(scratch, scratchMark);
-					newCursor->cursor_off++;
+					newCursor.cursor_off++;
 				}
 			}
+			if (!foundMatch) { Notify_W("No matches"); break; }
 			
-			if (cursorContents.size == 0 || !foundMatch)
-			{
-				memcpy(newCursor, cursor, sizeof(EditorCursorRange)); //just keep the same selection
-			}
-		}
-		
-		//TODO: Finish this!
-		//TODO: Can we spawn many non-empty selections?
-		// EditorCmd command = ZEROED;
-		// command.cmd = ED_NavMoveCursorTo;
-		// command.byte_offsets = newCursors;
-		// ed_push_command(Ctx, &command);
-		
+			NotifyPrint_I("Selecting [%llu,%llu]", newCursor.sel.first_off, newCursor.sel.last_off);
+			EditorCmd command = ZEROED;
+			command.cmd = ED_NavMoveCursorTo;
+			command.byte_offsets.size = 1;
+			command.byte_offsets.array = &newCursor.sel.last_off;
+			ed_push_command(Ctx, &command);
+			command.cmd = ED_NavMoveCursorTo;
+			command.flags = ED_FLG_UpdateSelection|ED_FLG_ResetCamera;
+			command.byte_offsets.size = 1;
+			command.byte_offsets.array = &newCursor.sel.first_off;
+			ed_push_command(Ctx, &command);
+		} while(false);
 		ScratchEnd(scratch);
 	}
 }
