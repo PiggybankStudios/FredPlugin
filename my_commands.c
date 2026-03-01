@@ -438,10 +438,67 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle header (large)", "Wraps the current selection in 
 	WithContext(ctx) { ToggleHeader(StrLit("// "), 64, '+', '-', '-', '|', '|'); }
 }
 
+// +==============================+
+// |         jump_to_next         |
+// +==============================+
+DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance of string selected by cursor and moves the cursor there", jump_to_next)
+{
+	WithContext(ctx)
+	{
+		ScratchBegin(scratch);
+		EditorCursorArray cursors = ZEROED;
+		ed_cursor_ranges(scratch, Ctx, &cursors);
+		EditorCursorArray newCursors = ZEROED;
+		newCursors.size = cursors.size;
+		newCursors.array = AllocArray(EditorCursorRange, scratch, newCursors.size);
+		for (u64 cIndex = 0; cIndex < cursors.size; cIndex++)
+		{
+			EditorCursorRange* cursor = &cursors.array[cIndex];
+			EditorCursorRange* newCursor = &newCursors.array[cIndex];
+			newCursor->cursor_off = Max2(cursor->sel.first_off, cursor->sel.last_off);
+			Str8 cursorContents = ZEROED;
+			ed_string_at_range(scratch, Ctx, &cursor->sel, &cursorContents);
+			bool foundMatch = false;
+			if (cursorContents.size > 0)
+			{
+				u64 scratchMark = arena_pos(scratch);
+				while (newCursor->cursor_off + cursorContents.size <= ed_content_byte_count(Ctx))
+				{
+					Str8 contentsAtOffset = ZEROED;
+					EditorOffsetRange range = { .first_off = newCursor->cursor_off, .last_off = newCursor->cursor_off + cursorContents.size };
+					ed_string_at_range(scratch, Ctx, &cursor->sel, &contentsAtOffset);
+					if (contentsAtOffset.size == cursorContents.size && memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
+					{
+						newCursor->sel.first_off = newCursor->cursor_off;
+						newCursor->sel.last_off = newCursor->cursor_off + cursorContents.size;
+						foundMatch = true;
+						break;
+					}
+					arena_pop_to(scratch, scratchMark);
+					newCursor->cursor_off++;
+				}
+			}
+			
+			if (cursorContents.size == 0 || !foundMatch)
+			{
+				memcpy(newCursor, cursor, sizeof(EditorCursorRange)); //just keep the same selection
+			}
+		}
+		
+		//TODO: Finish this!
+		//TODO: Can we spawn many non-empty selections?
+		// EditorCmd command = ZEROED;
+		// command.cmd = ED_NavMoveCursorTo;
+		// command.byte_offsets = newCursors;
+		// ed_push_command(Ctx, &command);
+		
+		ScratchEnd(scratch);
+	}
+}
+
 //TODO: toggle_header/toggle_header_large
 //TODO: toggle_comment
 //TODO: add_next_no_wrapping
-//TODO: jump_to_next
 //TODO: move_left_subword/move_left_subword
 //TODO: duplicate_selection
 //TODO: jump_to_header_prev/jump_to_header_next
