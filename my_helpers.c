@@ -33,3 +33,10 @@ Str8 JoinStringsInArenaWithChar(Arena* arena, Str8 left, char sepChar, Str8 righ
 {
 	return JoinStringsInArena3(arena, left, MakeStr8(1, &sepChar), right);
 }
+
+EditorCursorArray Fred_GetCursors(Arena* arena)
+{
+	EditorCursorArray cursors = ZEROED;
+	ed_cursor_ranges(arena, Ctx, &cursors);
+	return cursors;
+}

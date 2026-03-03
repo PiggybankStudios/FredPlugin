@@ -500,11 +500,96 @@ DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance o
 			command.byte_offsets.array = &newCursor.sel.last_off;
 			ed_push_command(Ctx, &command);
 		} while(false);
+		
 		ScratchEnd(scratch);
 	}
 }
 
-//TODO: Fixup toggle_comment from example_commands.c
+// +==============================+
+// |        toggle_comment        |
+// +==============================+
+DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment to selected lines or current line.", toggle_comment)
+{
+	WithContext(ctx)
+	{
+		ScratchBegin(scratch);
+		EditorCursorArray cursors = Fred_GetCursors(scratch);
+		
+		Str8 repl_str = ZEROED;
+		int good = 1;
+		if (cursors.size != 1)
+		{
+			Notify_W("Operation only supported with a single cursor");
+			good = 0;
+		}
+		
+		u64 start_line;
+		u64 end_line;
+		u32 add_comment = 0;
+		if (good)
+		{
+			// Find the line at the cursor selection.  Note: The selection might also be empty, but that's OK.
+			start_line = ed_line_at_offset(ctx, cursors.array[0].sel.first_off);
+			end_line = ed_line_at_offset(ctx, cursors.array[0].sel.last_off);
+			// Pull the first line range and decide if we need to add a comment or remove one.
+			EditorOffsetRange line_rng;
+			ed_byte_range_at_line(ctx, start_line, &line_rng);
+			Str8 line_txt;
+			ed_string_at_range(scratch, ctx, &line_rng, &line_txt);
+			u32 slash_count = 0;
+			for (u64 i = 0; i < line_txt.size && i < 2; ++i)
+			{
+				slash_count += line_txt.str[i] == '/';
+			}
+			add_comment = slash_count != 2;
+			
+			// Create batch to iterate lines which either removes the comment or adds one.
+			// Note: For selected lines which do not already have a comment, we will leave
+			// them alone.
+			EditorBatchEdit batch;
+			ed_edit_batch_begin(ctx, &batch);
+			if (add_comment)
+			{
+				// Note: Lines are inclusive ranges.
+				EditorBatchInsert ins = ZEROED;
+				ins.size = (end_line - start_line) + 1;
+				ins.array = AllocArray(EditorInsertData, scratch, ins.size);
+				u64 idx = 0;
+				for (u64 line = start_line; line <= end_line; ++line)
+				{
+					ed_byte_range_at_line(ctx, line, &line_rng);
+					ins.array[idx].off = line_rng.first_off;
+					ins.array[idx].buf = StrLit("//");
+					++idx;
+				}
+				ed_edit_batch_insert(&batch, &ins);
+			}
+			else
+			{
+				// Note: Lines are inclusive ranges.
+				EditorBatchRemove rm = ZEROED;
+				rm.size = (end_line - start_line) + 1;
+				rm.array = AllocArray(EditorOffsetRange, scratch, rm.size);
+				u64 idx = 0;
+				for (u64 line = start_line; line <= end_line; ++line)
+				{
+					ed_byte_range_at_line(ctx, line, &line_rng);
+					ed_string_at_range(scratch, ctx, &line_rng, &line_txt);
+					if (line_txt.size > 1 && line_txt.str[0] == '/' && line_txt.str[1] == '/')
+					{
+						rm.array[idx].first_off = line_rng.first_off;
+						rm.array[idx].last_off = line_rng.first_off + 2;
+					}
+					++idx;
+				}
+				ed_edit_batch_remove(&batch, &rm);
+			}
+			ed_edit_batch_end(ctx, &batch);
+		}
+		ScratchEnd(scratch);
+	}
+}
+
 //TODO: add_next_no_wrapping
 //TODO: move_left_subword/move_left_subword
 //TODO: duplicate_selection

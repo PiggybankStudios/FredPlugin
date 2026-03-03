@@ -137,6 +137,7 @@
 			"#define StrSliceFrom(str, startIndex)",
 			"#define WithContext(context)",
 			"Arena* arena_pull_scratch(PluginManager* mgr, Arena* conflict)",
+			"EditorCursorArray Fred_GetCursors(Arena* arena)",
 			"Str8 AllocStr8(Arena* arena, Str8 str)",
 			"Str8 ConvertTitleToHeader(Arena* arena, Str8 title, Str8 indentationStr, Str8 lineCommentSyntax, u64 width, char cornerChar, char topChar, char bottomChar, char leftChar, char rightChar)",
 			"Str8 JoinStringsInArena(Arena* arena, Str8 left, Str8 right)",
