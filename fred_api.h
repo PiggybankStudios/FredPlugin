@@ -255,17 +255,21 @@ void ed_edit_batch_replace(EditorBatchEdit* batch, EditorBatchReplace* ops);
 void ed_push_command(EditorCtx* ctx, EditorCmd* cmd);
 
 // +==============================+
-// |           Utility            |
+// |            String            |
 // +==============================+
 // Formats a string printf-style and allocates result to specified arena.  There is a unique specifier '%S' for Str8.
 void str8_fmt_internal(Arena* a, Str8* result, const char* fmt, va_list vlst);
 // Performs a lexicographic comparison on input strings.
 i32 str8_compare_internal(Str8* a, Str8* b);
+i32 str8_compare(Str8 a, Str8 b) { return str8_compare_internal(&a, &b); }
 // Returns 1 if the input string is an integral value of the specified radix.
 u32 str8_is_integer_internal(Str8* str, u32 radix);
+u32 str8_is_integer(Str8 str, u32 radix) { return str8_is_integer_internal(&str, radix); }
 // Converts the input string to an integral value of the specified radix.
 u64 u64_from_str8_internal(Str8* str, u32 radix);
+u64 u64_from_str8(Str8 str, u32 radix) { return u64_from_str8_internal(&str, radix); }
 // Tries to convert the intput string to a floating-point value.  Returns 0 if the conversion failed.
 u32 try_f64_from_str8_internal(Str8* str, double* result);
+u32 try_f64_from_str8(Str8 str, double* result) { return try_f64_from_str8_internal(&str, result); }
 
 #endif //  _FRED_API_H

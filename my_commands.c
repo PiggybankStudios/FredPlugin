@@ -598,7 +598,7 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment
 //TODO: check_off_todo_line
 
 // +==============================+
-// |   Not Possible Right Now?    |
+// |    Not Possible Right Now?   |
 // +==============================+
 //TODO: rename_file
 //TODO: save_as_fixed

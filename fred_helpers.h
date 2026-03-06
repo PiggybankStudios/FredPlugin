@@ -61,24 +61,6 @@ void NotifyPrintAt(DbgLevel level, const char* formatStr, ...)
 #define NotifyPrint_W(formatStr, ...) NotifyPrintAt(DbgLevel_Warning, formatStr, ##__VA_ARGS__)
 #define NotifyPrint_E(formatStr, ...) NotifyPrintAt(DbgLevel_Error,   formatStr, ##__VA_ARGS__)
 
-
-Str8 AllocStr8(Arena* arena, Str8 str)
-{
-	Str8 cpy = ZEROED;
-	cpy.size = str.size;
-	cpy.str = AllocArrayNoZero(char, arena, str.size);
-	memcpy(cpy.str, str.str, str.size);
-	return cpy;
-}
-
-i32 str8_compare(Str8 a, Str8 b) { return str8_compare_internal(&a, &b); }
-// String conversions.
-// Returns 1 if the input string is an integer of the desired radix.
-u32 str8_is_integer(Str8 str, u32 radix) { return str8_is_integer_internal(&str, radix); }
-u64 u64_from_str8(Str8 str, u32 radix) { return u64_from_str8_internal(&str, radix); }
-// Returns 0 if the conversion failed.
-u32 try_f64_from_str8(Str8 str, double* result) { return try_f64_from_str8_internal(&str, result); }
-
 // +--------------------------------------------------------------+
 // |                      Plguin Hook Macro                       |
 // +--------------------------------------------------------------+
