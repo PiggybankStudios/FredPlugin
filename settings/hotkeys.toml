@@ -1,0 +1,224 @@
+[[binding]]
+name = "GLB_ShowHelp"
+key = "P"
+mods = ["Ctrl","Alt"]
+
+[[binding]]
+name = "GLB_RecompilePlugins"
+key = "F1"
+mods = ["Shift"]
+
+[[binding]]
+name = "GLB_ToggleFullscreen"
+key = "F11"
+mods = []
+
+[[binding]]
+name = "GLB_SplitEditor"
+key = "\\"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "GLB_FileExplorer"
+key = "P"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "GLB_ConfigExplorer"
+key = "P"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "GLB_SimpleCommand"
+key = "K"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "GLB_Quit"
+key = "W"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_GotoLine"
+key = "Return"
+mods = ["Ctrl","Alt"]
+
+[[binding]]
+name = "ED_Find"
+key = "F"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_FindAll"
+key = "F"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_FindReplace"
+key = "F"
+mods = ["Ctrl","Alt"]
+
+[[binding]]
+name = "ED_NewFile"
+key = "N"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_NewFileSplit"
+key = "N"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_Save"
+key = "S"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_SaveAll"
+key = "S"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_SaveAs"
+key = "S"
+mods = ["Ctrl","Alt"]
+
+[[binding]]
+name = "ED_Undo"
+key = "Z"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_Redo"
+key = "Z"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_IncreaseFontSize"
+key = "="
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_DecreaseFontSize"
+key = "-"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_CloseEditor"
+key = "W"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_PreviousCursor"
+key = ","
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_FutureCursor"
+key = "."
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_NewlineBelow"
+key = "Return"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_NewlineAbove"
+key = "Return"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_OutdentLine"
+key = "]"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_DupCursorUp"
+key = "Up"
+mods = ["Alt","Shift"]
+
+[[binding]]
+name = "ED_DupCursorDown"
+key = "Down"
+mods = ["Alt","Shift"]
+
+[[binding]]
+name = "ED_NewCursor"
+key = "Left Mouse"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_SelectionToCursor"
+key = "D"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_EmptyBlockUp"
+key = "Up"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_EmptyBlockDown"
+key = "Down"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_EmptyBlockUpSel"
+key = "Up"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_EmptyBlockDownSel"
+key = "Down"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_SortSelectedLines"
+key = "F9"
+mods = []
+
+[[binding]]
+name = "ED_CenterViewToCursor"
+key = "Spacebar"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "FILE_EXP_FileNewPanel"
+key = "Return"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "FILE_EXP_PathInExplorer"
+key = "O"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "FILE_EXP_ToggleDirRoot"
+key = "]"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "FILE_EXP_RootToParent"
+key = "Backspace"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "FIND_NextResult"
+key = "Return"
+mods = []
+
+[[binding]]
+name = "FIND_PrevResult"
+key = "Return"
+mods = ["Shift"]
+
+[[binding]]
+name = "FIND_Replace"
+key = "Return"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "SMCLI_KillCommand"
+key = "Delete"
+mods = ["Ctrl","Shift"]

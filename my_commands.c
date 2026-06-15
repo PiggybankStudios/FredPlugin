@@ -590,6 +590,8 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment
 	}
 }
 
+//TODO: jump_to_prev (Alt+Shift+S)
+//TODO: Select prev instance multi-cursor ("Duplicate multi-cursor as selection")
 //TODO: add_next_no_wrapping
 //TODO: move_left_subword/move_left_subword
 //TODO: duplicate_selection

@@ -27,7 +27,7 @@ Str8 PrintInArena(Arena* arena, const char* formatStr, ...)
 {
 	Str8 result = ZEROED;
 	va_list args;
-	va_start(args, fmt);
+	va_start(args, formatStr);
 	str8_fmt_internal(arena, &result, formatStr, args);
 	va_end(args);
 	return result;
