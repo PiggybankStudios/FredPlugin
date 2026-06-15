@@ -193,13 +193,14 @@ Str8 ConvertTitleToHeader(Arena* arena, Str8 title, Str8 indentationStr, Str8 li
 	}
 	
 	 //TODO: We should probably do platfom correct line endings (or maybe ask Fred what style line endings the file is)
-	result.size = line1.size + 1 + line2.size + 1 + line3.size;
+	Str8 newLine = StrLit("\r\n");
+	result.size = line1.size + newLine.size + line2.size + newLine.size + line3.size;
 	result.str = AllocArray(char, arena, result.size);
 	memcpy(&result.str[0], line1.str, line1.size);
-	result.str[line1.size] = '\n';
-	memcpy(&result.str[line1.size + 1], line2.str, line2.size);
-	result.str[line1.size + 1 + line2.size] = '\n';
-	memcpy(&result.str[line1.size + 1 + line2.size + 1], line3.str, line3.size);
+	memcpy(&result.str[line1.size], newLine.str, newLine.size);
+	memcpy(&result.str[line1.size + newLine.size], line2.str, line2.size);
+	memcpy(&result.str[line1.size + newLine.size + line2.size], newLine.str, newLine.size);
+	memcpy(&result.str[line1.size + newLine.size + line2.size + newLine.size], line3.str, line3.size);
 	
 	ScratchEnd(scratch);
 	return result;
@@ -616,10 +617,44 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment
 	}
 }
 
+// +==============================+
+// |      duplicate_selection     |
+// +==============================+
+DEF_PLUGIN_EDITOR_HOOK("Duplicate Selection", "Duplicates the selected text immediately following the selection. For an empty selection, a new line is created just below the line the cursor is on", duplicate_selection)
+{
+	WithContext(ctx)
+	{
+		ScratchBegin(scratch);
+		EditorCursorArray cursors = Fred_GetCursors(scratch);
+		EditorBatchEdit batch;
+		ed_edit_batch_begin(Ctx, &batch);
+		for (u64 cIndex = 0; cIndex < cursors.size; cIndex++)
+		{
+			EditorCursorRange* cursor = &cursors.array[cIndex];
+			EditorOffsetRange rangeToDupe = cursor->sel;
+			bool addNewLine = false;
+			if (cursor->sel.first_off == cursor->sel.last_off)
+			{
+				ed_byte_range_at_line(ctx, ed_line_at_offset(ctx, cursor->sel.first_off), &rangeToDupe);
+				addNewLine = true;
+			}
+			Str8 textToDupe = Str8_Empty;
+			if (rangeToDupe.first_off != rangeToDupe.last_off) { ed_string_at_range(scratch, ctx, &rangeToDupe, &textToDupe); }
+			EditorBatchInsert ins = ZEROED;
+			ins.size = 1; ins.array = AllocArray(EditorInsertData, scratch, ins.size);
+			ins.array[0].off = Max2(rangeToDupe.first_off, rangeToDupe.last_off);
+			ins.array[0].buf = textToDupe;
+			if (addNewLine) { ins.array[0].buf = JoinStringsInArena(scratch, StrLit("\r\n"), textToDupe); }
+			ed_edit_batch_insert(&batch, &ins);
+		}
+		ed_edit_batch_end(Ctx, &batch);
+		ScratchEnd(scratch);
+	}
+}
+
 //TODO: Select prev instance multi-cursor ("Duplicate multi-cursor as selection")
 //TODO: add_next_no_wrapping
 //TODO: move_left_subword/move_left_subword
-//TODO: duplicate_selection
 //TODO: jump_to_header_prev/jump_to_header_next
 //TODO: open_parens_wrap_selection
 //TODO: check_off_todo_line
