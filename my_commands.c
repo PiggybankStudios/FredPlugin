@@ -441,68 +441,94 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle header (large)", "Wraps the current selection in 
 // +==============================+
 // |         jump_to_next         |
 // +==============================+
+void JumptoNextOrPrev(bool forward)
+{
+	u64 fileSize = ed_content_byte_count(Ctx);
+    ScratchBegin(scratch);
+	
+	EditorCursorArray cursors = ZEROED;
+	ed_cursor_ranges(scratch, Ctx, &cursors);
+	if (cursors.size == 0) { Notify_W("No cursors"); ScratchEnd(scratch); return; }
+	if (cursors.size > 1) { Notify_W("More than one cursor"); ScratchEnd(scratch); return; }
+	if (cursors.array[0].sel.first_off == cursors.array[0].sel.last_off) { Notify_W("No selection"); ScratchEnd(scratch); return; }
+	
+	EditorCursorRange cursor = cursors.array[0];
+	Str8 cursorContents = ZEROED;
+	ed_string_at_range(scratch, Ctx, &cursor.sel, &cursorContents);
+	
+	EditorCursorRange newCursor = ZEROED;
+	newCursor.cursor_off = forward ? Max2(cursor.sel.first_off, cursor.sel.last_off) : Min2(cursor.sel.first_off, cursor.sel.last_off);
+	
+	bool foundMatch = false;
+	if (cursorContents.size > 0)
+	{
+		u64 scratchMark = arena_pos(scratch);
+        if (forward)
+        {
+    		while (newCursor.cursor_off + cursorContents.size <= fileSize)
+    		{
+    			Str8 contentsAtOffset = ZEROED;
+    			EditorOffsetRange range = { .first_off = newCursor.cursor_off, .last_off = newCursor.cursor_off + cursorContents.size };
+    			ed_string_at_range(scratch, Ctx, &range, &contentsAtOffset);
+    			if (contentsAtOffset.size == cursorContents.size &&
+    				memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
+    			{
+    				// NotifyPrint_I("Found match at %llu", newCursor.cursor_off);
+    				newCursor.sel.first_off = newCursor.cursor_off;
+    				newCursor.sel.last_off = newCursor.cursor_off + cursorContents.size;
+    				foundMatch = true;
+    				break;
+    			}
+    			arena_pop_to(scratch, scratchMark);
+    			newCursor.cursor_off++;
+    		}
+        }
+        else
+        {
+            while (newCursor.cursor_off > cursorContents.size)
+            {
+                Str8 contentsAtOffset = ZEROED;
+    			EditorOffsetRange range = { .first_off = newCursor.cursor_off - cursorContents.size, .last_off = newCursor.cursor_off };
+                ed_string_at_range(scratch, Ctx, &range, &contentsAtOffset);
+                if (contentsAtOffset.size == cursorContents.size &&
+    				memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
+    			{
+                    // NotifyPrint_I("Found match at %llu", newCursor.cursor_off - cursorContents.size);
+    				newCursor.sel.first_off = newCursor.cursor_off - cursorContents.size;
+    				newCursor.sel.last_off = newCursor.cursor_off;
+    				foundMatch = true;
+    				break;
+                }
+    			arena_pop_to(scratch, scratchMark);
+                newCursor.cursor_off--;
+            }
+        }
+	}
+	if (!foundMatch) { Notify_W("No matches"); ScratchEnd(scratch); return; }
+	
+	// NotifyPrint_I("Selecting [%llu,%llu]", newCursor.sel.first_off, newCursor.sel.last_off);
+	EditorCmd command = ZEROED;
+	command.cmd = ED_NavMoveCursorTo;
+	command.byte_offsets.size = 1;
+	command.byte_offsets.array = &newCursor.sel.first_off;
+	ed_push_command(Ctx, &command);
+	command.cmd = ED_NavMoveCursorTo;
+	command.flags = ED_FLG_UpdateSelection|ED_FLG_ResetCamera;
+	command.byte_offsets.size = 1;
+	command.byte_offsets.array = &newCursor.sel.last_off;
+	ed_push_command(Ctx, &command);
+
+    ScratchEnd(scratch);
+}
+
 DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the next matching instance of string selected by cursor and moves the cursor there", jump_to_next)
 {
-	WithContext(ctx)
-	{
-		ScratchBegin(scratch);
-		do //Breakable block
-		{
-			Notify_I("test");
-			u64 fileSize = ed_content_byte_count(Ctx);
-			
-			EditorCursorArray cursors = ZEROED;
-			ed_cursor_ranges(scratch, Ctx, &cursors);
-			if (cursors.size == 0) { Notify_W("No cursors"); break; }
-			if (cursors.size > 1) { Notify_W("More than one cursor"); break; }
-			if (cursors.array[0].sel.first_off == cursors.array[0].sel.last_off) { Notify_W("No selection"); break; }
-			
-			EditorCursorRange cursor = cursors.array[0];
-			Str8 cursorContents = ZEROED;
-			ed_string_at_range(scratch, Ctx, &cursor.sel, &cursorContents);
-			
-			EditorCursorRange newCursor = ZEROED;
-			newCursor.cursor_off = Max2(cursor.sel.first_off, cursor.sel.last_off);
-			
-			bool foundMatch = false;
-			if (cursorContents.size > 0)
-			{
-				u64 scratchMark = arena_pos(scratch);
-				while (newCursor.cursor_off + cursorContents.size <= fileSize)
-				{
-					Str8 contentsAtOffset = ZEROED;
-					EditorOffsetRange range = { .first_off = newCursor.cursor_off, .last_off = newCursor.cursor_off + cursorContents.size };
-					ed_string_at_range(scratch, Ctx, &range, &contentsAtOffset);
-					if (contentsAtOffset.size == cursorContents.size &&
-						memcmp(contentsAtOffset.str, cursorContents.str, contentsAtOffset.size) == 0)
-					{
-						// NotifyPrint_I("Found match at %llu", newCursor.cursor_off);
-						newCursor.sel.first_off = newCursor.cursor_off;
-						newCursor.sel.last_off = newCursor.cursor_off + cursorContents.size;
-						foundMatch = true;
-						break;
-					}
-					arena_pop_to(scratch, scratchMark);
-					newCursor.cursor_off++;
-				}
-			}
-			if (!foundMatch) { Notify_W("No matches"); break; }
-			
-			// NotifyPrint_I("Selecting [%llu,%llu]", newCursor.sel.first_off, newCursor.sel.last_off);
-			EditorCmd command = ZEROED;
-			command.cmd = ED_NavMoveCursorTo;
-			command.byte_offsets.size = 1;
-			command.byte_offsets.array = &newCursor.sel.first_off;
-			ed_push_command(Ctx, &command);
-			command.cmd = ED_NavMoveCursorTo;
-			command.flags = ED_FLG_UpdateSelection|ED_FLG_ResetCamera;
-			command.byte_offsets.size = 1;
-			command.byte_offsets.array = &newCursor.sel.last_off;
-			ed_push_command(Ctx, &command);
-		} while(false);
-		
-		ScratchEnd(scratch);
-	}
+	WithContext(ctx) { JumptoNextOrPrev(true); }
+}
+
+DEF_PLUGIN_EDITOR_HOOK("Jump to next match", "Finds the previous matching instance of string selected by cursor and moves the cursor there", jump_to_prev)
+{
+	WithContext(ctx) { JumptoNextOrPrev(false); }
 }
 
 // +==============================+
@@ -590,7 +616,6 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment
 	}
 }
 
-//TODO: jump_to_prev (Alt+Shift+S)
 //TODO: Select prev instance multi-cursor ("Duplicate multi-cursor as selection")
 //TODO: add_next_no_wrapping
 //TODO: move_left_subword/move_left_subword
@@ -598,6 +623,7 @@ DEF_PLUGIN_EDITOR_HOOK("Toggle C-style comment line(s)", "Adds a C-style comment
 //TODO: jump_to_header_prev/jump_to_header_next
 //TODO: open_parens_wrap_selection
 //TODO: check_off_todo_line
+//TODO: Unindent lines
 
 // +==============================+
 // |    Not Possible Right Now?   |
