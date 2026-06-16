@@ -222,3 +222,69 @@ mods = ["Ctrl"]
 name = "SMCLI_KillCommand"
 key = "Delete"
 mods = ["Ctrl","Shift"]
+
+[[binding.custom]]
+group = "ED"
+fn = "taylor"
+key = ";"
+mods = ["Ctrl"]
+
+[[binding.custom]]
+group = "ED"
+fn = "kill_line"
+key = "R"
+mods = ["Ctrl"]
+
+[[binding.custom]]
+group = "ED"
+fn = "insert_nums_0"
+key = "N"
+mods = ["Ctrl","Alt"]
+
+[[binding.custom]]
+group = "ED"
+fn = "insert_nums_1"
+key = "N"
+mods = ["Ctrl","Alt","Shift"]
+
+[[binding.custom]]
+group = "ED"
+fn = "align_cursors"
+key = "A"
+mods = ["Alt"]
+
+[[binding.custom]]
+group = "ED"
+fn = "toggle_header"
+key = "T"
+mods = ["Ctrl"]
+
+[[binding.custom]]
+group = "ED"
+fn = "toggle_header_large"
+key = "T"
+mods = ["Ctrl","Shift"]
+
+[[binding.custom]]
+group = "ED"
+fn = "jump_to_next"
+key = "S"
+mods = ["Alt"]
+
+[[binding.custom]]
+group = "ED"
+fn = "toggle_comment"
+key = "/"
+mods = ["Ctrl"]
+
+[[binding.custom]]
+group = "ED"
+fn = "jump_to_prev"
+key = "S"
+mods = ["Alt","Shift"]
+
+[[binding.custom]]
+group = "ED"
+fn = "duplicate_selection"
+key = "C"
+mods = ["Ctrl","Shift"]

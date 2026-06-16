@@ -29,7 +29,7 @@ show_line_numbers = true
 auto_syntax_highlighting = true
 auto_line_endings = true
 render_whitespace = false
-tabs_as_spaces = true
+tabs_as_spaces = false
 spellcheck_by_default = false
 disable_line_highlight = false
 html_copy_background = true
@@ -211,11 +211,11 @@ scrollbar_min_size = 20
 
 [system.core]
 preferred_file_explorer = ''
-core_window_rect = [-1881, -107, 1366, 768]
+core_window_rect = [-2560, -343, 1289, 724]
 async_update_frequency_ms = 1000
 editor_theme = 'ColorTheme_Fred'
 fullscreen = false
-maximized = true
+maximized = false
 disable_sessions = false
 noisy_session_info = false
 
