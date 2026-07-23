@@ -1,0 +1,838 @@
+[[binding]]
+name = "GLB_ShowHelp"
+key = "P"
+mods = ["Ctrl","Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_ToggleShowFPS"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_ReloadShaders"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_LoadFont"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_LoadDefaultFont"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_ReloadConfig"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_RecompilePlugins"
+key = "B"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_OpenConfig"
+key = "P"
+mods = ["Ctrl","Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_ToggleFullscreen"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_OpenTreeSitter"
+key = ";"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_OpenArenaTracker"
+key = ";"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_SplitEditor"
+key = "\\"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_FileExplorer"
+key = "P"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_ConfigExplorer"
+key = "P"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_SimpleCommand"
+key = "K"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_ToggleVim"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_PluginAPITemplate"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "GLB_Quit"
+key = "Q"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_InstallCmdLine"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleLineNumbers"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleSyntaxHL"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleCRLF"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleSpellcheck"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleLineGuides"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_ToggleRenderWhitespace_v2"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_UnifyLineEndings"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_TrimLineEndings"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_GotoLine"
+key = "Return"
+mods = ["Ctrl","Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_Find"
+key = "F"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_FindAll"
+key = "F"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_FindAllNewPanel"
+key = "F"
+mods = ["Cmd","Alt"]
+os = "macOS"
+
+[[binding]]
+name = "ED_FindReplace"
+key = "H"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_FindNextResult"
+key = "F4"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_FindPrevResult"
+key = "F4"
+mods = ["Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_JumpMatching"
+key = "S"
+mods = ["Alt"]
+os = "macOS"
+
+[[binding]]
+name = "ED_NewFile"
+key = "N"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_NewFileSplit"
+key = "N"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_Save"
+key = "S"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_SaveAll"
+key = "S"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_SaveAs"
+key = "S"
+mods = ["Cmd","Alt"]
+os = "macOS"
+
+[[binding]]
+name = "ED_Undo"
+key = "Z"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_Redo"
+key = "Z"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_UndoTree"
+key = "Y"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_IncreaseFontSize"
+key = "="
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_DecreaseFontSize"
+key = "-"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_CloseEditor"
+key = "W"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_PreviousCursor"
+key = ","
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_FutureCursor"
+key = "."
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_NewlineBelow"
+key = "Return"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_NewlineAbove"
+key = "Return"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_OutdentLine"
+key = "["
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_ChangeLang"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_RefreshSuggestions"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_DupCursorUp"
+key = "Up"
+mods = ["Ctrl","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_DupCursorDown"
+key = "Down"
+mods = ["Ctrl","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_NewCursor"
+key = "Left Mouse"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_TrailCursors"
+key = "Left Mouse"
+mods = ["Alt"]
+os = "macOS"
+
+[[binding]]
+name = "ED_MoveLineUp"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_MoveLineDown"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_SelectionToCursor"
+key = "D"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_PrimaryCursorNext"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_PrimaryCursorPrev"
+key = "Null"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_EmptyBlockUp"
+key = "Up"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_EmptyBlockDown"
+key = "Down"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_EmptyBlockUpSel"
+key = "Up"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_EmptyBlockDownSel"
+key = "Down"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_CyclePanelForward"
+key = "PgDn"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_CyclePanelBack"
+key = "PgUp"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_CycleOnlyPanelForward"
+key = "PgDn"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_CycleOnlyPanelBack"
+key = "PgUp"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_SortSelectedLines"
+key = "F9"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "ED_CenterViewToCursor"
+key = "Spacebar"
+mods = ["Ctrl"]
+os = "macOS"
+
+[[binding]]
+name = "ED_SelectAll"
+key = "A"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "ED_ClipboardCopy"
+key = "C"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_ClipboardPaste"
+key = "V"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "ED_ClipboardCut"
+key = "X"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "FILE_EXP_FileNewPanel"
+key = "Return"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "FILE_EXP_PathInExplorer"
+key = "O"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "FILE_EXP_ToggleDirRoot"
+key = "]"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "FILE_EXP_RootToParent"
+key = "Backspace"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "FIND_NextResult"
+key = "Return"
+mods = []
+os = "macOS"
+
+[[binding]]
+name = "FIND_PrevResult"
+key = "Return"
+mods = ["Shift"]
+os = "macOS"
+
+[[binding]]
+name = "FIND_Replace"
+key = "Return"
+mods = ["Cmd"]
+os = "macOS"
+
+[[binding]]
+name = "SMCLI_KillCommand"
+key = "Delete"
+mods = ["Cmd","Shift"]
+os = "macOS"
+
+[[binding]]
+name = "GLB_RecompilePlugins"
+key = "F1"
+mods = ["Shift"]
+
+[[binding]]
+name = "GLB_ToggleFullscreen"
+key = "F11"
+mods = ["Cmd"]
+
+[[binding]]
+name = "GLB_OpenArenaTracker"
+key = "F11"
+mods = ["Shift"]
+
+[[binding]]
+name = "GLB_SplitEditor"
+key = "\\"
+mods = ["Cmd"]
+
+[[binding]]
+name = "GLB_FileExplorer"
+key = "O"
+mods = ["Cmd"]
+
+[[binding]]
+name = "GLB_ConfigExplorer"
+key = "P"
+mods = ["Cmd"]
+
+[[binding]]
+name = "GLB_SimpleCommand"
+key = "K"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "GLB_ToggleVim"
+key = "I"
+mods = ["Cmd"]
+
+[[binding]]
+name = "GLB_PluginAPITemplate"
+key = "P"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "GLB_Quit"
+key = "Q"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_ToggleLineNumbers"
+key = "F2"
+mods = []
+
+[[binding]]
+name = "ED_ToggleSyntaxHL"
+key = "F4"
+mods = []
+
+[[binding]]
+name = "ED_ToggleCRLF"
+key = "F7"
+mods = []
+
+[[binding]]
+name = "ED_ToggleSpellcheck"
+key = "F10"
+mods = []
+
+[[binding]]
+name = "ED_ToggleLineGuides"
+key = "G"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_UnifyLineEndings"
+key = "F7"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_TrimLineEndings"
+key = "T"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_GotoLine"
+key = "G"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_Find"
+key = "F"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_FindAll"
+key = "F"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_FindAllNewPanel"
+key = "F"
+mods = ["Ctrl","Cmd"]
+
+[[binding]]
+name = "ED_FindReplace"
+key = "H"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_JumpMatching"
+key = "\\"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_NewFile"
+key = "N"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_NewFileSplit"
+key = "N"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_Save"
+key = "S"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_SaveAll"
+key = "S"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_SaveAs"
+key = "S"
+mods = ["Ctrl","Cmd"]
+
+[[binding]]
+name = "ED_Undo"
+key = "Z"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_Redo"
+key = "R"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_UndoTree"
+key = "Z"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_IncreaseFontSize"
+key = "="
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_DecreaseFontSize"
+key = "-"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_CloseEditor"
+key = "W"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_PreviousCursor"
+key = "Left"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_FutureCursor"
+key = "Right"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_NewlineBelow"
+key = "Return"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_NewlineAbove"
+key = "Return"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_OutdentLine"
+key = "Tab"
+mods = ["Shift"]
+
+[[binding]]
+name = "ED_ChangeLang"
+key = "L"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_RefreshSuggestions"
+key = "Spacebar"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_DupCursorUp"
+key = "Up"
+mods = ["Ctrl","Cmd"]
+
+[[binding]]
+name = "ED_DupCursorDown"
+key = "Down"
+mods = ["Ctrl","Cmd"]
+
+[[binding]]
+name = "ED_NewCursor"
+key = "Left Mouse"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_TrailCursors"
+key = "Left Mouse"
+mods = ["Ctrl","Shift"]
+
+[[binding]]
+name = "ED_MoveLineUp"
+key = "Up"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_MoveLineDown"
+key = "Down"
+mods = ["Ctrl"]
+
+[[binding]]
+name = "ED_SelectionToCursor"
+key = "D"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_EmptyBlockUp"
+key = "Up"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_EmptyBlockDown"
+key = "Down"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_EmptyBlockUpSel"
+key = "Up"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_EmptyBlockDownSel"
+key = "Down"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_CyclePanelForward"
+key = "PgDn"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_CyclePanelBack"
+key = "PgUp"
+mods = ["Cmd"]
+
+[[binding]]
+name = "ED_CycleOnlyPanelForward"
+key = "PgDn"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_CycleOnlyPanelBack"
+key = "PgUp"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_SortSelectedLines"
+key = "Y"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "ED_CenterViewToCursor"
+key = "M"
+mods = ["Cmd"]
+
+[[binding]]
+name = "FILE_EXP_FileNewPanel"
+key = "Return"
+mods = ["Cmd"]
+
+[[binding]]
+name = "FILE_EXP_PathInExplorer"
+key = "O"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "FILE_EXP_ToggleDirRoot"
+key = "]"
+mods = ["Cmd"]
+
+[[binding]]
+name = "FILE_EXP_RootToParent"
+key = "Backspace"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "FIND_NextResult"
+key = "Return"
+mods = []
+
+[[binding]]
+name = "FIND_PrevResult"
+key = "Return"
+mods = ["Shift"]
+
+[[binding]]
+name = "FIND_Replace"
+key = "Return"
+mods = ["Cmd"]
+
+[[binding]]
+name = "SMCLI_KillCommand"
+key = "Delete"
+mods = ["Cmd","Shift"]
+
+[[binding]]
+name = "GLB_ShowHelp"
+key = "P"
+mods = ["Cmd","Shift"]
