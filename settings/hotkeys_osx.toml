@@ -396,14 +396,14 @@ os = "macOS"
 
 [[binding]]
 name = "ED_CyclePanelForward"
-key = "PgDn"
-mods = ["Cmd"]
+key = "X"
+mods = ["Ctrl","Cmd"]
 os = "macOS"
 
 [[binding]]
 name = "ED_CyclePanelBack"
-key = "PgUp"
-mods = ["Cmd"]
+key = "Z"
+mods = ["Ctrl","Cmd"]
 os = "macOS"
 
 [[binding]]
